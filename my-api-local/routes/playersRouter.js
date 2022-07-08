@@ -11,7 +11,7 @@ router.get('/', paginatedResults(Player), async (req, res) => {
         res.setHeader("Content-Type", "application/json").json(res.paginatedResults);
     }
     catch (err) {
-        res.status(500).setHeader("Content-Type", "application/json").json({message: err.message});
+        // res.setHeader("Content-Type", "application/json").status(500).json({message: err.message});
     }
 });
 
@@ -56,7 +56,7 @@ router.patch('/:id', getPlayer, async (req, res) => {
         const updatedPlayer = await res.player.save();
         res.setHeader("Content-Type", "application/json").json(updatedPlayer);
     } catch (err) {
-        res.status(400).setHeader("Content-Type", "application/json").json({ message: err.message })
+        res.setHeader("Content-Type", "application/json").status(400).json({ message: err.message })
     }
 });
 
@@ -70,8 +70,6 @@ router.delete('/:id', getPlayer,async (req, res) => {
         res.status(500).setHeader("Content-Type", "application/json").json({ message: err.message });
     }
 });
-
-
 
 
 module.exports = router;
