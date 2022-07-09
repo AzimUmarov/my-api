@@ -7,7 +7,7 @@ const authUser = require("./routes/authRouter");
 const authUsers = require("./middlewares/authUser")
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://azim:4444@cluster0.mdf4u.mongodb.net/nba_players?retryWrites=true&w=majority", {
+mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
