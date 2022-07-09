@@ -21,6 +21,10 @@ db.once("open", () => console.log("connected to the db nba_player "));
 app.use("/players", authUsers, players);
 app.use("/", authUser);
 
-app.listen(8080, () => {
-    console.log("Server started");
+app.listen(process.env.PORT, (err) => {
+    if(err){
+        console.log(e.message);
+        return 0;
+    }
+    console.log(`Server started on port ${process.env.PORT}`);
 })

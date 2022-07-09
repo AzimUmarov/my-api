@@ -2,12 +2,12 @@ require('dotenv').config();
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-const User = require("../models/user")
+const User = require("../models/user");
 const redis = require('redis');
 const authUser = require("../middlewares/authUser");
 
 router.post("/login", async (req, res) => {
-    const user = {username: req.body.username, password: req.body.password};
+    const user = {username: req.body.username || "n", password: req.body.password || "n"};
 
     if(user.username.length < 3 || user.password.length < 4)
         return res.setHeader("Content-Type", "application/json").status(403).json({message: "Invalid user data"});
@@ -44,13 +44,13 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-    const tempUser = {username: req.body.username, password: req.body.password};
+    const tempUser = {username: req.body.username || "n", password: req.body.password} || "n";
     const client = redis.createClient({
         url: process.env.REDIS_ENDPOINT + "",
         password:  process.env.REDIS_PASSWORD + ""
     });
 
-    //we can add validation like that
+    //some validiations
     if(tempUser.username.length < 3 || tempUser.password.length < 4)
         return res.status(400).json({message: "User data not valid :)"});
 

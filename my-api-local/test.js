@@ -12,7 +12,7 @@ let redisClient;
 
     await redisClient.connect();
 
-    let a = await redisClient.del( "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF6aW0iLCJwYXNzd29yZCI6IjQ0NDQiLCJpYXQiOjE2NTczODE4MjR9.gUWR9EA-FShJseot294he5Cw3nHiRq2pZncK1L2Tw7s");
+    let a = await redisClient.del("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF6aW0iLCJwYXNzd29yZCI6IjQ0NDQiLCJpYXQiOjE2NTczODE4MjR9.gUWR9EA-FShJseot294he5Cw3nHiRq2pZncK1L2Tw7s");
     console.log(a);
 })();
 
