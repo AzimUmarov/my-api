@@ -1,15 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const Player = require("../models/player");
+const getPlayer = require("../middlewares/getPlayer");
+const paginatedResults = require("../middlewares/paginatedResults");
 
 //get all players
-router.get('/', paginatedResults(Player),async (req, res) => {
+router.get('/', paginatedResults(Player), async (req, res) => {
     try {
         // const players =  await Player.find();
-        res.json(res.paginatedResults);
+        res.setHeader("Content-Type", "application/json").json(res.paginatedResults);
     }
     catch (err) {
-        res.status(500).json({message: err.message});
+        res.setHeader("Content-Type", "application/json").status(500).json({message: err.message});
     }
 });
 
@@ -26,16 +28,16 @@ router.post('/', async (req, res) => {
         weight: req.body.weight,
         collage: req.body.collage,
         born: req.body.born,
-        birth_city: req.body.born,
+        birth_city: req.body.birth_city,
         birth_state: req.body.birth_state
     });
 
     try {
         const newPlayer = await player.save();
-        res.status(201).json(newPlayer);
+        res.status(201).setHeader("Content-Type", "application/json").json(newPlayer);
     }
     catch (err) {
-        res.status(400).json({message: err.message});
+        res.status(400).setHeader("Content-Type", "application/json").json({message: err.message});
     }
 });
 
@@ -52,9 +54,9 @@ router.patch('/:id', getPlayer, async (req, res) => {
     }
     try {
         const updatedPlayer = await res.player.save();
-        res.json(updatedPlayer);
+        res.setHeader("Content-Type", "application/json").json(updatedPlayer);
     } catch (err) {
-        res.status(400).json({ message: err.message })
+        res.setHeader("Content-Type", "application/json").status(400).json({ message: err.message })
     }
 });
 
@@ -62,60 +64,12 @@ router.patch('/:id', getPlayer, async (req, res) => {
 router.delete('/:id', getPlayer,async (req, res) => {
     try {
         await res.player.remove();
-        res.json({message: "player deleted:)"});
+        res.setHeader("Content-Type", "application/json").json({message: "player deleted:)"});
     }
     catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).setHeader("Content-Type", "application/json").json({ message: err.message });
     }
 });
 
-async function getPlayer(req, res, next) {
-    let player;
-    try {
-        player = await Player.findById(req.params.id);
-
-        if (player == null)
-            return res.status(404).json({ message: 'player not found :(' });
-    } catch (err) {
-        return res.status(500).json({ message: err.message });
-    }
-
-    res.player = player;
-    next();
-}
-
-function paginatedResults(model) {
-    return async (req, res, next) => {
-        const page = parseInt(req.query.page);
-        const limit = parseInt(req.query.limit);
-        if(limit < 20)
-            res.status(400).json({message: "Pagination limit can't be over 20"});
-        const startIndex = (page - 1) * limit;
-        const endIndex = page * limit;
-
-        const results = {};
-
-        if (endIndex < await model.countDocuments().exec()) {
-            results.next = {
-                page: page + 1,
-                limit: limit
-            }
-        }
-
-        if (startIndex > 0) {
-            results.previous = {
-                page: page - 1,
-                limit: limit
-            }
-        }
-        try {
-            results.results = await model.find().limit(limit).skip(startIndex).exec();
-            res.paginatedResults = results;
-            next();
-        } catch (e) {
-            res.status(500).json({ message: e.message });
-        }
-    }
-}
 
 module.exports = router;
