@@ -8,9 +8,13 @@ We need to build oven api with soome our interests theme data over 1K
 The app works on 4K nba players data
 
 Features:
-User authentification,session in Redis
-Get/Post/Update/Destroy, pagination 20 
-Cache (redis)
+- User authentification,session in Redis
+- Get/Post/Update/Destroy, pagination 20 
+- Cache (redis)
+
+<img src="https://theazimjon.netlify.app/assets/img/portfolio/my-api.png" />
+
+<a href="https://www.postman.com/theazimjon/workspace/my-api/request/19131229-4fc4cf33-da1d-42d2-8eb1-6d5c6ecd4b5d" align="center"> Documentation </a>
 
 ## Installation
 Just visit the url
@@ -27,8 +31,7 @@ serverless deploy
 
 
 ## Usage
-https://fjniv9t7uh.execute-api.us-east-1.amazonaws.com/documentation
-In this url has documentation writed in postman servis 
+Documentation writed in postman servis 
 There has a documentation sections for each request and each folder of request
 you can read the text  and run the request for test
 
