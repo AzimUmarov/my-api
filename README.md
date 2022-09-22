@@ -2,7 +2,7 @@
 ***
 
 ## Task
-We need to build oven api with soome our interests theme data over 1K
+We need to build own api with some our interests theme data over 1K
 
 ## Description
 The app works on 4K nba players data
